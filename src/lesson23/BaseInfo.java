@@ -63,10 +63,22 @@ public class BaseInfo {
         CopyOnWriteArrayList <String> strings = new CopyOnWriteArrayList<>();
         // один поток получает строки от пользователя и добавляет их
         // в strings
+        strings.add(String.valueOf(strings));
 
         // Thread.sleep(колличество МИЛИсекунд);
         //  другой поток приостанавливает работу на 30 секунд,
         // после чего записывает в файл минимальную
+        Thread string2 = new Thread (() -> {
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e){
+                throw new RuntimeException(e);
+            }
+            System.out.println("string1 обработал данные");
+            strings.add(String.valueOf(30000));
+        });
+        string2.start();
+
         // по размеру строку из strings - используем Stream API
         // после чего строку необходимо удалить из коллекции
 
